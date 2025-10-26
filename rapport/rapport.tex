@@ -40,15 +40,43 @@
     \part \textbf{(1.1) Mathematical Modeling.}
     \begin{solutionorbox}
 
+
+        A cutting pattern is feasible if the total length of the pieces cut from a large board does not exceed the length L of the board. 
+        This can be expressed as a knapsack constraint:
+        \[\sum_{j=1}^{n} l_j x_{tj} \leq L \quad \forall t \in P\]
+        where x\_{tj} is the number of pieces of length lj in pattern t.
+
+
+
     \end{solutionorbox}
 
     \part \textbf{(1.2) Primal Solution and Pattern Generation.}
     \begin{solutionorbox}
+        Let y\_t be the number of large boards used with cutting pattern t. The master problem can be formulated as follows:
+
+        Minimize: \[\sum_{t \in P} y_t\]
+
+        Subject to:
+        \[\sum_{t \in P} x_{tj} y_t \geq d_j \quad \forall j = 1, \ldots, n\]
+        \[y_t \in \mathbb{Z}_{\geq 0} \quad \forall t \in P\]
+
+        where d\_j is the demand for pieces of length lj.
+
+
 
     \end{solutionorbox}
 
     \part \textbf{(1.3) Implementation and Results.}
     \begin{solutionorbox}
+    To generate new cutting patterns, we can solve a knapsack problem where the objective is to maximize the total length of pieces cut from a large board without exceeding its length L. The items in the knapsack are the different lengths lj, and their values can be set to 1 (indicating that we want to include as many pieces as possible). The knapsack constraint is given by:
+
+        Maximize: \[\sum_{j=1}^{n} x_j\]
+
+        Subject to:
+        \[\sum_{j=1}^{n} l_j x_j \leq L\]
+        \[x_j \in \mathbb{Z}_{\geq 0} \quad \forall j = 1, \ldots, n\]
+
+        Solving this knapsack problem will yield a new cutting pattern that can be added to the master problem.
 
     \end{solutionorbox}
 \end{parts}
