@@ -25,7 +25,7 @@
 \newtheorem{theorem}{Theorem}
 
 \title{LINMA2450 --- Project Part 1 \\ Combinatorial Optimization}
-\author{Brieuc Dallemagne \texttt{77122100} \and Alois Tavier \texttt{}}
+\author{Brieuc Dallemagne \texttt{77122100} \and Alois Tavier \texttt{58242100}}
 \date{}
 
 \begin{document}
@@ -37,54 +37,148 @@
 \section*{Problem 1 --- Optimal Boards Cutting}
 
 \begin{parts}
-    \part \textbf{(1.1) Mathematical Modeling.}
+    \part \textbf{(1.1) Knapsack.}
+    \begin{solutionorbox}
+    A cutting pattern is feasible if the total length of the pieces cut from a large board does not exceed the board length \(L\). 
+    So we can express this as a knapsack-type constraint:
+    \[
+    \sum_{j=1}^{n} l_j\, x^t_{j} \leq L, \quad x^t_{j} \in \mathbb{Z}_+, \quad \forall x^t \in P.
+    \]
+    \end{solutionorbox}
+
+    \part \textbf{(1.2) Model P1.}
     \begin{solutionorbox}
 
-
-        A cutting pattern is feasible if the total length of the pieces cut from a large board does not exceed the length L of the board. 
-        This can be expressed as a knapsack constraint:
-        \[\sum_{j=1}^{n} l_j x_{tj} \leq L \quad \forall t \in P\]
-        where x\_{tj} is the number of pieces of length lj in pattern t.
-
-
+    Let \(P\) denote the set of feasible cutting patterns \(x^t \in X\), where \(a_{jt} = x^t_j\) is the number of items of type \(j\) in pattern \(t\) and \(y_t \in \mathbb{Z}_+\) represents the number of boards cut according to pattern \(t\).
+    \[
+    \begin{aligned}
+    \text{(P1)}\quad 
+    \min\;& \sum_{t\in P} y_t\\
+    \text{s.t.}\;& \sum_{t\in P} a_{jt}\,y_t \;\ge\; d_j, && j=1,\ldots,n,\\
+    & y_t \in \mathbb{Z}_+, && t\in P.
+    \end{aligned}
+    \]
 
     \end{solutionorbox}
 
-    \part \textbf{(1.2) Primal Solution and Pattern Generation.}
+    \part \textbf{(1.3) Size and Tractability.}
     \begin{solutionorbox}
-        Let y\_t be the number of large boards used with cutting pattern t. The master problem can be formulated as follows:
+    To generate new cutting patterns, we can solve a knapsack problem where the objective is to maximize the total used length without exceeding the board length \(L\):
+    \[
+    \max_{x\in\mathbb{Z}_+^n} \sum_{j=1}^{n} l_j x_j
+    \quad\text{s.t.}\quad
+    \sum_{j=1}^{n} l_j x_j \le L.
+    \]
+    The resulting integer vector \(x\) defines a new feasible cutting pattern that can be added to the master problem (P1) to improve its primal bound.
+    
+    \smallskip
+    The full model (P1) has one integer variable per feasible pattern, so \(|P|=|X|\), where
+    \[
+    X = \Big\{x\in\mathbb{Z}_+^n \;\big|\; \sum_{j=1}^n l_j x_j \le L\Big\}.
+    \]
+    An upper bound on the number of variables is
+    \[
+    |P| \le \prod_{j=1}^n \big(\lfloor L/l_j \rfloor + 1\big),
+    \]
+    which grows combinatorially with \(n\) and \(L\). For each item type \(j\), the integer variable \(x_j\) can take any value between \(0\) and the maximum number of pieces of length \(l_j\) that fit in a board, given by \(\lfloor L/l_j \rfloor\). Considering all item types simultaneously, the total number of combinations equals the product of these possible ranges. This exponential growth in feasible patterns makes enumeration computationally intractable, confirming that the cutting stock problem is NP-hard.
+    \end{solutionorbox}
 
-        Minimize: \[\sum_{t \in P} y_t\]
+    \part \textbf{(2.1) Implementation.}
+    \begin{solutionorbox}
+    Code : See notebook
 
-        Subject to:
-        \[\sum_{t \in P} x_{tj} y_t \geq d_j \quad \forall j = 1, \ldots, n\]
-        \[y_t \in \mathbb{Z}_{\geq 0} \quad \forall t \in P\]
+    \end{solutionorbox}
+    \part \textbf{(2.2) Implementation.}
+    \begin{solutionorbox}
+    Code : See notebook
 
-        where d\_j is the demand for pieces of length lj.
-
-
+    \end{solutionorbox}
+    \part \textbf{(2.3) Implementation.}
+    \begin{solutionorbox}
+    Code : See notebook
 
     \end{solutionorbox}
 
-    \part \textbf{(1.3) Implementation and Results.}
+    \part \textbf{(3) Implementation.}
     \begin{solutionorbox}
-    To generate new cutting patterns, we can solve a knapsack problem where the objective is to maximize the total length of pieces cut from a large board without exceeding its length L. The items in the knapsack are the different lengths lj, and their values can be set to 1 (indicating that we want to include as many pieces as possible). The knapsack constraint is given by:
-
-        Maximize: \[\sum_{j=1}^{n} x_j\]
-
-        Subject to:
-        \[\sum_{j=1}^{n} l_j x_j \leq L\]
-        \[x_j \in \mathbb{Z}_{\geq 0} \quad \forall j = 1, \ldots, n\]
-
-        Solving this knapsack problem will yield a new cutting pattern that can be added to the master problem.
+    Code : See notebook
 
     \end{solutionorbox}
+
+    
 \end{parts}
 
-\newpage
 \section*{Problem 2 --- Optimal Delivery Assignment}
 
 \begin{parts}
+    \part\textbf{(1.1) Model — Optimal Delivery Assignment}
+    \begin{solutionorbox}
+ 
+    First we precompute
+    \[
+    c_{ij}=\operatorname{dist}_G(i,j)
+    \quad\text{(shortest-path length from }i\in D\text{ to }j\in C\text{; set }c_{ij}=+\infty\text{ if unreachable).}
+    \]
+    
+    We create binary variables $x_{ij}$ s.t for each $i\in D$, $j\in C$,
+    \[
+    x_{ij}\in\{0,1\}\quad\text{equals 1 if client }j\text{ is served by warehouse }i.
+    \]
+    
+    the we create our MILP formulation as.
+    \[
+    \min_{x}\ \sum_{i\in D}\sum_{j\in C} c_{ij}\,x_{ij}
+    \]
+    \[
+    \sum_{i\in D} x_{ij}=1 \quad \forall\, j\in C \qquad\text{(each client is assigned)}
+    \]
+    \[
+    \sum_{j\in C} x_{ij}\le 1 \quad \forall\, i\in D \qquad\text{(at most one client per warehouse)}
+    \]
+    \[
+    x_{ij}\in\{0,1\}.
+    \]
+    
+    \end{solutionorbox}
+    
+    \part\textbf{(1.2) The Hungarian Method}
+    \begin{solutionorbox}
+    The Hungarian method is a combinatorial optimization technique used to solve the
+    assignment problem for 2 sets of the same size (finding a minimum-cost one-to-one matching between two sets).
+
+    Main idea: The method transforms the cost matrix step by step:
+    \begin{enumerate}
+    \item Subtract the smallest element in each row and column so that every row and column contains at least one zero.
+    \item Select a maximum set of independent zeros (one per row and column).
+    \item If all rows or columns are covered, the corresponding assignment is optimal.
+    Otherwise, adjust the uncovered elements and repeat until a complete matching is obtained.
+    \end{enumerate}
+
+    In our case the matrix might be rectangular. (when $|D|> |C|$) So, we added dummy rows with a cost of zero to obtain a square matrix.
+
+    \textbf{Complexity.} The algorithm runs in polynomial time \(O(n^3)\) and guarantees an optimal
+    solution for any finite cost matrix.
+    \end{solutionorbox}
+    
+    \part\textbf{(1.3) Optimality and Tractability}
+    \begin{solutionorbox}
+    The Hungarian method always finds an optimal solution because it is based on the
+    duality principle of linear programming.
+    At each iteration, the algorithm maintains feasible dual variables (row and column reductions)
+    and ensures complementary slackness with respect to zero-cost entries.
+    
+    \smallskip
+    When all tasks are assigned, the primal (assignment) and dual (reduction) conditions are both
+    satisfied, proving optimality.
+    
+    \smallskip
+    \textbf{Tractability.} The assignment problem is efficiently solvable in polynomial time.
+    Its linear relaxation is integral since the constraint matrix is totally unimodular, ensuring that
+    the optimal solution of the relaxed problem is also integer.
+    \end{solutionorbox}
+
+
+
     \part \textbf{(2.1) Mathematical Modeling.}
     \begin{solutionorbox}
 
@@ -100,6 +194,30 @@
 
     \end{solutionorbox}
 \end{parts}
+
+\begin{thebibliography}{9}
+
+\bibitem{wiki_assignment}
+Wikipedia contributors, 
+\emph{Assignment problem}, 
+\textit{Wikipedia, The Free Encyclopedia}, 
+available at: \url{https://en.wikipedia.org/wiki/Assignment_problem}, 
+accessed November 2025.
+
+\bibitem{byjus_assignment}
+BYJU’S, 
+\emph{Assignment Problem – Definition, Methods, and Solved Examples}, 
+available at: \url{https://byjus.com/maths/hungarian-method/}, 
+accessed November 2025.
+
+\bibitem{geeksforgeeks_hungarian}
+GeeksforGeeks, 
+\emph{Hungarian Algorithm for Assignment Problem (Set 1 – Introduction)}, 
+available at: \url{https://www.geeksforgeeks.org/dsa/hungarian-algorithm-assignment-problem-set-1-introduction/}, 
+accessed November 2025.
+
+\end{thebibliography}
+
 
 
 \end{document}
