@@ -12,6 +12,7 @@
 \usepackage{float}
 \usepackage[bb=boondox]{mathalpha,mathtools}
 \usepackage{nicematrix}
+\usepackage{dsfont}
 \usepackage{xpatch}
 \usepackage{graphicx}
 \usepackage{subcaption}
@@ -39,23 +40,34 @@
 \begin{parts}
     \part \textbf{(1.1) Knapsack.}
     \begin{solutionorbox}
-    A cutting pattern is feasible if the total length of the pieces cut from a large board does not exceed the board length \(L\). 
-    So we can express this as a knapsack-type constraint:
+    A cutting pattern is feasible if the total sum of the lengths $l_j$ of the pieces cut from a large board does not exceed the board length \(L\). 
+    So we can express $X$, the set of all feasible patterns, as a knapsack-type constraint:
     \[
-    \sum_{j=1}^{n} l_j\, x^t_{j} \leq L, \quad x^t_{j} \in \mathbb{Z}_+, \quad \forall x^t \in P.
+    \sum_{j=1}^{n} l_j\, x_{j} \leq L, \quad x_{j} \in \mathbb{Z}_+, \quad x \in P \quad \Rightarrow{} \quad x \in X.
     \]
+    We can formulate this as follow: \begin{equation*}
+        X=\bigg\{ x\in \mathbb{Z}^n_+ :  \sum_{j=1}^{n} l_j\, x_{j} \leq L \bigg\}
+    \end{equation*}
     \end{solutionorbox}
 
     \part \textbf{(1.2) Model P1.}
     \begin{solutionorbox}
 
-    Let \(P\) denote the set of feasible cutting patterns \(x^t \in X\), where \(a_{jt} = x^t_j\) is the number of items of type \(j\) in pattern \(t\) and \(y_t \in \mathbb{Z}_+\) represents the number of boards cut according to pattern \(t\).
+    Let \(X\) denote the set of feasible cutting patterns \(x^t \in P\), where \(x^t_j\) is the number of items of type \(j\) in pattern \(t\) and \(y_t \in \mathbb{Z}_+\) represents the number of boards cut according to pattern \(t\).
     \[
     \begin{aligned}
     \text{(P1)}\quad 
-    \min\;& \sum_{t\in P} y_t\\
-    \text{s.t.}\;& \sum_{t\in P} a_{jt}\,y_t \;\ge\; d_j, && j=1,\ldots,n,\\
-    & y_t \in \mathbb{Z}_+, && t\in P.
+    \underset{y_t \in \mathbb{Z}_+}{\min}\;& \sum_{t\in X} y_t\\
+    \text{s.t.}\;& \sum_{t\in X} x^t_{j}\,y_t \;\ge\; d_j, && j=1,\ldots,n,\; \text{and }x^ t\in X.
+    \end{aligned}
+    \]
+    or in matrix form with $y\in Z_+^{T}$,  $A\in Z_+^{ n\times T}$ such that $a_{jt}=x^t_j$,  $|X|=T$ and $d =  \
+    [d_1, \cdots, d_n]$ we obtain:
+    \[
+    \begin{aligned}
+    \text{(P1)}\quad 
+    \underset{y \in \mathbb{Z}^T_+}{\min}\;&  \mathds{1}^\top y \\
+    \text{s.t.}\;& A \cdot y \;\ge\; d, && x^ t\in X.
     \end{aligned}
     \]
 
@@ -81,6 +93,19 @@
     |P| \le \prod_{j=1}^n \big(\lfloor L/l_j \rfloor + 1\big),
     \]
     which grows combinatorially with \(n\) and \(L\). For each item type \(j\), the integer variable \(x_j\) can take any value between \(0\) and the maximum number of pieces of length \(l_j\) that fit in a board, given by \(\lfloor L/l_j \rfloor\). Considering all item types simultaneously, the total number of combinations equals the product of these possible ranges. This exponential growth in feasible patterns makes enumeration computationally intractable, confirming that the cutting stock problem is NP-hard.
+    \\
+    \\
+    \color{red}Proposition\color{black}\\
+    Let's take an example where $L=n$ and $l_j=1$ for $j=1, \dots, n$:\\
+    The constraints is the following:
+    \begin{equation*}
+        X = \bigg\{x \in \mathbb{Z}_+^n \Big|  \sum_{j=1}^n x_j \leq n, \quad x_j \in \mathbb{Z}_+\bigg\}
+    \end{equation*}
+    Every binary vector $x\in \{0,1\}^n$ is a valid solution but $|\{0,1\}^n|$ is smaller than $|X|$ because this doesn't include the cases where $x_j> 1$.Let's construct a lower bound:
+    \begin{equation*}
+        |X| \geq |\{0,1\}^n| = 2^n
+    \end{equation*}
+    We know that the number of variable in the model is $T=|X|$ and that $X$ can grow exponentially in certain cases with the number of customer's demands. This exponential growth in feasible patterns makes enumeration computationally in-tractable, confirming that the cutting stock problem is NP-hard.
     \end{solutionorbox}
 
     \part \textbf{(2.1) Implementation.}
