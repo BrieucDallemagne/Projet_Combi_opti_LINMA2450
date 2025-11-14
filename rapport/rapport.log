@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.30)  13 NOV 2025 02:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.9.30)  14 NOV 2025 23:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -859,29 +859,62 @@ LaTeX Font Info:    Trying to load font information for U+dsrom on input line 69
  (/usr/local/texlive/2025/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 94--101
+
+[1
+
+{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (23.322pt too wide) in paragraph at lines 131--132
+\OT1/cmr/m/n/10.95 The re-sult-ing vec-tor $\OML/cmm/m/it/10.95 x[]$ \OT1/cmr/m/n/10.95 sat-is-fies $[][] \OML/cmm/m/it/10.95 l[]x[] \OMS/cmsy/m/n/10.95 ^^T \OML/cmm/m/it/10.95 L$\OT1/cmr/m/n/10.95 . It is a fea-si-ble cut-ting pat-tern and we set $[](\OML/cmm/m/it/10.95 s\OT1/cmr/m/n/10.95 ) =
+ []
+
+
+
+[2]
+<../csp_solving_time.png, id=41, 602.25pt x 401.5pt>
+File: ../csp_solving_time.png Graphic file (type png)
+<use ../csp_solving_time.png>
+Package pdftex.def Info: ../csp_solving_time.png  used on input line 150.
+(pdftex.def)             Requested size: 423.88586pt x 282.60417pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 153--154
 
  []
 
 
 
-[1
+[3 <../csp_solving_time.png>]
 
-{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+[4
 
-pdfTeX warning: pdflatex: pop empty color page stack 0
 ]
+<../MILP_solving_time.pdf, id=59, 602.25pt x 401.5pt>
+File: ../MILP_solving_time.pdf Graphic file (type pdf)
+<use ../MILP_solving_time.pdf>
+Package pdftex.def Info: ../MILP_solving_time.pdf  used on input line 250.
+(pdftex.def)             Requested size: 263.30515pt x 175.53941pt.
 
-[2]
+Overfull \hbox (23.93816pt too wide) in paragraph at lines 250--251
+ [][] 
+ []
 
-[3]
-Underfull \hbox (badness 1394) in paragraph at lines 239--243
+<../Hungarian_solving_time.pdf, id=60, 602.25pt x 401.5pt>
+File: ../Hungarian_solving_time.pdf Graphic file (type pdf)
+<use ../Hungarian_solving_time.pdf>
+Package pdftex.def Info: ../Hungarian_solving_time.pdf  used on input line 255.
+(pdftex.def)             Requested size: 261.81073pt x 174.54694pt.
+
+Overfull \hbox (12.4679pt too wide) in paragraph at lines 255--256
+ [][] 
+ []
+
+
+Underfull \hbox (badness 1394) in paragraph at lines 279--283
 \OT1/cmtt/m/n/10.95 / / www . geeksforgeeks . org / dsa / hungarian-[]algorithm-[]assignment-[]problem-[]set-[]1-[]introduction/$[]\OT1/cmr/m/n/10.95 , ac-
  []
 
 
 
-[4]
+[5 <../MILP_solving_time.pdf> <../Hungarian_solving_time.pdf>]
 This exam contains 0 questions with 13 parts, 0 subparts, and 0 subsubparts.
 (./rapport.aux)
  ***********
@@ -896,18 +929,18 @@ Package rerunfilecheck Info: File `rapport.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 26381 strings out of 467748
- 501620 string characters out of 5426959
- 958437 words of memory out of 5000000
- 54664 multiletter control sequences out of 15000+600000
- 637036 words of font info for 79 fonts, out of 8000000 for 9000
+ 26416 strings out of 467748
+ 502556 string characters out of 5426959
+ 955438 words of memory out of 5000000
+ 54694 multiletter control sequences out of 15000+600000
+ 637939 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 81i,11n,80p,3897b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/boondox/zxxrl8a.pfb>
-Output written on rapport.pdf (4 pages, 208430 bytes).
+ 81i,11n,80p,3897b,650s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/doublestroke/dsrom10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/boondox/zxxrl8a.pfb>
+Output written on rapport.pdf (5 pages, 353691 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 165 PDF objects out of 1000 (max. 8388607)
+ 117 compressed objects within 2 object streams
+ 31 named destinations out of 1000 (max. 500000)
+ 28 words of extra memory for PDF output out of 10000 (max. 10000000)
 

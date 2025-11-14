@@ -43,31 +43,31 @@
     A cutting pattern is feasible if the total sum of the lengths $l_j$ of the pieces cut from a large board does not exceed the board length \(L\). 
     So we can express $X$, the set of all feasible patterns, as a knapsack-type constraint:
     \[
-    \sum_{j=1}^{n} l_j\, x_{j} \leq L, \quad x_{j} \in \mathbb{Z}_+, \quad x \in P \quad \Rightarrow{} \quad x \in X.
+    \sum_{j=1}^{n} l_j\, x_{j} \leq L, \quad x_{j} \in \mathbb{N}, \quad x \in X.
     \]
     We can formulate this as follow: \begin{equation*}
-        X=\bigg\{ x\in \mathbb{Z}^n_+ :  \sum_{j=1}^{n} l_j\, x_{j} \leq L \bigg\}
+        X=\bigg\{ x\in \mathbb{N}^n :  \sum_{j=1}^{n} l_j\, x_{j} \leq L \bigg\}
     \end{equation*}
     \end{solutionorbox}
 
     \part \textbf{(1.2) Model P1.}
     \begin{solutionorbox}
 
-    Let \(X\) denote the set of feasible cutting patterns \(x^t \in P\), where \(x^t_j\) is the number of items of type \(j\) in pattern \(t\) and \(y_t \in \mathbb{Z}_+\) represents the number of boards cut according to pattern \(t\).
+    Let \(X\) denote the set of feasible cutting patterns \(x \in P\), where \(x_j\) is the number of items of type \(j\) in pattern \(x\) and \(y_{x} \in \mathbb{N}\) represents the number of boards cut according to pattern \(x\).
     \[
     \begin{aligned}
     \text{(P1)}\quad 
-    \underset{y_t \in \mathbb{Z}_+}{\min}\;& \sum_{t\in X} y_t\\
-    \text{s.t.}\;& \sum_{t\in X} x^t_{j}\,y_t \;\ge\; d_j, && j=1,\ldots,n,\; \text{and }x^ t\in X.
+    \underset{y_x \in \mathbb{N}}{\min}\;& \sum_{x\in X} y_x\\
+    \text{s.t.}\;& \sum_{x\in X} x_{j}\,y_x \;\ge\; d_j, && j=1,\ldots,n
     \end{aligned}
     \]
-    or in matrix form with $y\in Z_+^{T}$,  $A\in Z_+^{ n\times T}$ such that $a_{jt}=x^t_j$,  $|X|=T$ and $d =  \
+    or in matrix form with $T:=|X|$, $y\in \mathbb{N}^{T}$,  $A\in \mathbb{N}^{ n\times T}$ such that $a_{jt}=x^t_j$ and $d =  \
     [d_1, \cdots, d_n]$ we obtain:
     \[
     \begin{aligned}
     \text{(P1)}\quad 
-    \underset{y \in \mathbb{Z}^T_+}{\min}\;&  \mathds{1}^\top y \\
-    \text{s.t.}\;& A \cdot y \;\ge\; d, && x^ t\in X.
+    \underset{y \in \mathbb{N}^T}{\min}\;& y^\top \mathds{1} \\
+    \text{s.t.}\;& A \cdot y \;\ge\; d, && x^t \in X.
     \end{aligned}
     \]
 
@@ -75,61 +75,87 @@
 
     \part \textbf{(1.3) Size and Tractability.}
     \begin{solutionorbox}
-    To generate new cutting patterns, we can solve a knapsack problem where the objective is to maximize the total used length without exceeding the board length \(L\):
-    \[
-    \max_{x\in\mathbb{Z}_+^n} \sum_{j=1}^{n} l_j x_j
-    \quad\text{s.t.}\quad
-    \sum_{j=1}^{n} l_j x_j \le L.
-    \]
-    The resulting integer vector \(x\) defines a new feasible cutting pattern that can be added to the master problem (P1) to improve its primal bound.
-    
-    \smallskip
-    The full model (P1) has one integer variable per feasible pattern, so \(|P|=|X|\), where
-    \[
-    X = \Big\{x\in\mathbb{Z}_+^n \;\big|\; \sum_{j=1}^n l_j x_j \le L\Big\}.
-    \]
-    An upper bound on the number of variables is
-    \[
-    |P| \le \prod_{j=1}^n \big(\lfloor L/l_j \rfloor + 1\big),
-    \]
-    which grows combinatorially with \(n\) and \(L\). For each item type \(j\), the integer variable \(x_j\) can take any value between \(0\) and the maximum number of pieces of length \(l_j\) that fit in a board, given by \(\lfloor L/l_j \rfloor\). Considering all item types simultaneously, the total number of combinations equals the product of these possible ranges. This exponential growth in feasible patterns makes enumeration computationally intractable, confirming that the cutting stock problem is NP-hard.
-    \\
-    \\
-    \color{red}Proposition\color{black}\\
     Let's take an example where $L=n$ and $l_j=1$ for $j=1, \dots, n$:\\
     The constraints is the following:
     \begin{equation*}
-        X = \bigg\{x \in \mathbb{Z}_+^n \Big|  \sum_{j=1}^n x_j \leq n, \quad x_j \in \mathbb{Z}_+\bigg\}
+        X = \bigg\{x \in \mathbb{N}^n \Big|  \sum_{j=1}^n x_j \leq n\bigg\}
     \end{equation*}
-    Every binary vector $x\in \{0,1\}^n$ is a valid solution but $|\{0,1\}^n|$ is smaller than $|X|$ because this doesn't include the cases where $x_j> 1$.Let's construct a lower bound:
+    Every binary vector $x\in \{0,1\}^n$ is a valid solution but $|\{0,1\}^n|$ is smaller than $|X|$ because this doesn't include the cases where $x_j> 1$. Let's construct a lower bound:
     \begin{equation*}
         |X| \geq |\{0,1\}^n| = 2^n
     \end{equation*}
-    We know that the number of variable in the model is $T=|X|$ and that $X$ can grow exponentially in certain cases with the number of customer's demands. This exponential growth in feasible patterns makes enumeration computationally in-tractable, confirming that the cutting stock problem is NP-hard.
+    We know that the number of variable in the model is $T=|X|$ and that the size of $X$ can grow exponentially in certain cases with the number of customer's demands. This exponential growth in feasible patterns makes enumeration computationally in-tractable, confirming that the cutting stock problem is NP-hard.
     \end{solutionorbox}
 
-    \part \textbf{(2.1) Implementation.}
+    \part \textbf{(2.1) Implementation of greedy heuristic.}
     \begin{solutionorbox}
-    Code : See notebook
-
+    implementation : see notebook
+    
+    At each step the heuristic selects, among all items that still fit in the remaining capacity,
+    the one with the largest length (ties broken by highest residual demand), and inserts it once.
+    This is repeated until no further item fits.
     \end{solutionorbox}
-    \part \textbf{(2.2) Implementation.}
+    \part \textbf{(2.2) proof.}
     \begin{solutionorbox}
-    Code : See notebook
-
+    Let's define \[z^1 = \sum_{x\in \tilde{X}}\Bar{y}_x \quad \text{s.t.} \; \; \sum_{x\in \tilde{X}}x_j\Bar{y}_x \geq d_j, \; \; j=1, \dots, n\]
+    a solution of the problem $P_1$ with $\tilde{X}$.\\
+    It is also a solution of $P_1$ with $X$ because it is admissible, i.e. respect the problem's constraints:
+    \[\sum_{x\in X}x_j y_x = \sum_{x\in \tilde{X}}x_j \Bar{y}_x + \sum_{x\in X\backslash\tilde{X}}x_j\cdot 0 = \sum_{x\in \tilde{X}}x_j \Bar{y}_x \geq d_j \quad j=1, \dots, n\]
+    So we have a primal solution of $P_1$ with $X$ taking the solution $\Bar{y}$ of $P_1$ with $\tilde{X}$:
+    \[
+    \begin{cases}
+        y_x=\Bar{y}_x \;\; \text{if} \;\; x\in \tilde{X}\\
+        y_x=0 \quad \text{if} \;\; x\in X\backslash \tilde{X}
+    \end{cases}
+    \]
+    This gives an uperbound to the problem optimal solution of the problem $P_1$ with $X$ as $z^1 \geq z^*$.
     \end{solutionorbox}
-    \part \textbf{(2.3) Implementation.}
+    \part \textbf{(2.3) Algorithm.}
     \begin{solutionorbox}
-    Code : See notebook
+    At iteration $k$, solving $P_1$ with the current set of patterns $\tilde X^k$ gives an optimal
+    solution $y^k$.  
+    From this we compute the residual demand of each item
+    \[
+        r_j^k \;=\; d_j - \sum_{x\in \tilde X^k} x_j\,y_x^k ,\qquad j=1,\dots,n.
+    \]
+    The information stored in $s$ is therefore $s=(y^k,r^k)$.
 
+    The procedure \textsc{NewPattern}$(s)$ constructs a new pattern by solving a knapsack problem
+    with capacity $L$, item lengths $l_j$ and profits $r_j^k$ using a greedy rule:
+    \begin{enumerate}
+        \item sort the items $j$ in non-increasing order of the ratio $r_j^k/l_j$;
+        \item starting from the first item in this order, insert as many copies as possible while
+              respecting $\sum_j l_j x_j \le L$;
+        \item continue with the next items in the list until no further piece fits.
+    \end{enumerate}
+    The resulting vector $x^{\text{new}}$ satisfies $\sum_j l_j x_j^{\text{new}} \le L$. It is a feasible cutting pattern and we set $\textsc{NewPattern}(s)=x^{\text{new}}$.
+
+    Since the profits are proportional to the residual demands, the pattern focuses on items with
+    large remaining demand. Adding such a pattern to $\tilde X^k$ is therefore likely to allow
+    $P_1$ to cover the demands with fewer boards and then to improve the primal upper bound.
     \end{solutionorbox}
 
-    \part \textbf{(3) Implementation.}
+    \part \textbf{(3) Implementation and comparison.}
     \begin{solutionorbox}
-    Code : See notebook
+    Implementation : see notebook
+    
+    We solved all instances using the HiGHS solver.  
+    For every provided instance, the primal bound obtained with our restricted pattern set coincides with what we found when we calculate the optimal value in the files that we created with BPPlib.  
+    CPU times were never that big but we put our time limit at 20 seconds for those instances. 
+    \smallskip
 
+    Here we made a plot to see the complexity of the solver:
+    
+    \begin{center}
+    \includegraphics[width=0.85\textwidth]{../csp_solving_time.png}
+    \end{center}
+    
+    As we could except from Q1.3, the plot shows that the solving time grows exponentially with the instance size.\\
+
+    Here is the result we got from the exemple of assignement:
+    Objective (nbr of long boards used) = 4.0   Status = OPTIMAL   Time = 0.022 s
     \end{solutionorbox}
-
+\clearpage
     
 \end{parts}
 
@@ -157,6 +183,7 @@
     \[
     \sum_{i\in D} x_{ij}=1 \quad \forall\, j\in C \qquad\text{(each client is assigned)}
     \]
+    To fit the model used by the Hungarian method we can add a last constraint:
     \[
     \sum_{j\in C} x_{ij}\le 1 \quad \forall\, i\in D \qquad\text{(at most one client per warehouse)}
     \]
@@ -204,20 +231,33 @@
 
 
 
-    \part \textbf{(2.1) Mathematical Modeling.}
+    \part \textbf{(2.1) implementation MILP.}
     \begin{solutionorbox}
-
+    see notebook
     \end{solutionorbox}
 
-    \part \textbf{(2.2) Hungarian Method.}
+    \part \textbf{(2.2) implementation Hungarian Method.}
     \begin{solutionorbox}
-
+    see notebook
     \end{solutionorbox}
 
     \part \textbf{(2.3) Implementation and Comparison.}
     \begin{solutionorbox}
 
+    \begin{center}
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=1.1\textwidth]{../MILP_solving_time.pdf}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=1.05\textwidth]{../Hungarian_solving_time.pdf}
+    \end{minipage}
+    \end{center}
+    Both methods show increasing runtimes as the instance size grows. The Hungarian method exhibits a visible rise for larger instances, but its absolute solving time remains in the millisecond range. The MILP solver, however, grows far more rapidly, reaching several seconds and displaying clear non-polynomial scaling. Even though both curves increase, the Hungarian method remains vastly faster across all instances. 
     \end{solutionorbox}
+
 \end{parts}
 
 \begin{thebibliography}{9}
